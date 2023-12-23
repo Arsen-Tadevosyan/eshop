@@ -5,8 +5,6 @@ import org.example.manager.CategoryManager;
 import org.example.manager.ProductManager;
 import org.example.model.Category;
 import org.example.model.Product;
-
-import java.sql.ResultSet;
 import java.util.Scanner;
 
 public class Main implements Command {
