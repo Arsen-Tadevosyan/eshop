@@ -98,7 +98,7 @@ public class Main implements Command {
         int quantity = Integer.parseInt(scanner.nextLine());
         System.out.println("please input new  category_id");
         int category_id = Integer.parseInt(scanner.nextLine());
-        Product product = new Product(name, description, price, quantity, category_id);
+        Product product = new Product(id,name, description, price, quantity, category_id);
         productManager.updateProduct(product);
     }
 

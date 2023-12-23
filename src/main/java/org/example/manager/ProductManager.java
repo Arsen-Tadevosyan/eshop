@@ -73,10 +73,16 @@ public class ProductManager {
             System.out.println("product with " + product.getId() + "-id dose not exists ");
             return;
         }
-        String query = "UPDATE product SET name='%s',description='%s',price=%d,quantity=%d,category_id=%d WHERE id=%d";
-        String sql = String.format(query, product.getName(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getCategory_id(), product.getId());
-        try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(sql);
+        String query = "UPDATE product SET name=?,description=?,price=?,quantity=?,category_id=? WHERE id=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setString(2, product.getDescription());
+            preparedStatement.setDouble(3, product.getPrice());
+            preparedStatement.setInt(4, product.getQuantity());
+            preparedStatement.setInt(5, product.getCategory_id());
+            preparedStatement.setInt(6, product.getId());
+
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -112,13 +118,14 @@ public class ProductManager {
         }
         return count;
     }
-    public double getMaxPrice(){
+
+    public double getMaxPrice() {
         String sql = "SELECT MAX(price) AS product_max FROM product";
         double max = 0;
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             if (resultSet.next()) {
-               max  = resultSet.getInt("product_max");
+                max = resultSet.getInt("product_max");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -132,7 +139,7 @@ public class ProductManager {
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             if (resultSet.next()) {
-                min  = resultSet.getInt("product_min");
+                min = resultSet.getInt("product_min");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -146,7 +153,7 @@ public class ProductManager {
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             if (resultSet.next()) {
-                avg  = resultSet.getInt("product_avg");
+                avg = resultSet.getInt("product_avg");
             }
         } catch (SQLException e) {
             e.printStackTrace();

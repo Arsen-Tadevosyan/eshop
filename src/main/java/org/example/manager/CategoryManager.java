@@ -3,10 +3,7 @@ package org.example.manager;
 import org.example.db.DBConnectionProvider;
 import org.example.model.Category;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +13,11 @@ public class CategoryManager {
 
     public void add(Category category) {
 
-        String query = "insert into category(name) values('%s')";
-        String sql = String.format(query, category.getName());
-        try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
+        String query = "insert into category(name) values(?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, category.getName());
+
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -66,10 +63,11 @@ public class CategoryManager {
             System.out.println("category with " + id + "-id dose not exists");
             return;
         }
-        String sql = "delete from category where id=" + id;
-        try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
+        String sql = "delete from category where id=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+
+            preparedStatement.executeUpdate();
             System.out.println("category was removes");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -82,10 +80,12 @@ public class CategoryManager {
             System.out.println("category with " + category.getId() + "-id dose not exists");
             return;
         }
-        String query = "UPDATE category SET name='%s' WHERE id=%d";
-        String sql = String.format(query, category.getName(), category.getId());
-        try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate(sql);
+        String query = "UPDATE category SET name=? WHERE id=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, category.getName());
+            preparedStatement.setInt(2, category.getId());
+
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
