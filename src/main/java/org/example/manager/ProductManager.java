@@ -10,16 +10,6 @@ import java.util.List;
 public class ProductManager {
     Connection connection = DBConnectionProvider.getInstance().getConnection();
 
-    //    public void add(Product product) {
-//        String query = "insert into product(name,description,price,quantity,category_id) VALUES('%s','%s',%f,%d,%d)";
-//        String sql = String.format(query, product.getName(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getCategory_id());
-//        try {
-//            Statement statement = connection.createStatement();
-//            statement.executeUpdate(sql);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
     public void add(Product product) {
         String query = "INSERT INTO product(name, description, price, quantity, category_id) VALUES(?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -31,7 +21,6 @@ public class ProductManager {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            // Handle the exception appropriately (e.g., log it, notify the user)
             e.printStackTrace();
         }
     }

@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 
 public class Product {
 
-    int id;
-    String name;
-    String description;
-    double price;
-    int quantity;
-    int category_id;
+   private int id;
+   private String name;
+   private String description;
+   private double price;
+   private int quantity;
+   private int category_id;
 
     public Product(String name, String description, double price, int quantity, int category_id) {
         this.name = name;

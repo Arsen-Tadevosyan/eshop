@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Category {
 
-    int id;
-    String name;
+   private int id;
+   private String name;
 
     public Category(String name) {
         this.name = name;
