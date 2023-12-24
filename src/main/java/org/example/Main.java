@@ -8,9 +8,9 @@ import org.example.model.Product;
 import java.util.Scanner;
 
 public class Main implements Command {
-    static ProductManager productManager = new ProductManager();
-    static CategoryManager categoryManager = new CategoryManager();
-    static Scanner scanner = new Scanner(System.in);
+   private static ProductManager productManager = new ProductManager();
+   private static CategoryManager categoryManager = new CategoryManager();
+   private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         boolean isRun = true;
